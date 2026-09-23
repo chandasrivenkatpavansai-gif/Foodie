@@ -1,197 +1,1395 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍴 Foodie - Delicious Food</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LearnNext | Learn Today, Build Tomorrow</title>
+
+  <style>
+    /* ========== CSS ========== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --primary: #4f46e5;
+      --primary-light: #eef2ff;
+      --background: #f7f8fc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --green: #16a34a;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark {
+      --background: #0f172a;
+      --card: #1e293b;
+      --text: #f1f5f9;
+      --muted: #cbd5e1;
+      --border: #334155;
+      --primary-light: #312e81;
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+    }
+
+    .navbar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      color: var(--primary);
+      font-size: 25px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .theme-btn {
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 10px 14px;
+      border-radius: 10px;
+    }
+
+    .hero {
+      margin: 30px auto;
+      width: 88%;
+      max-width: 1250px;
+      padding: 65px 7%;
+      border-radius: 25px;
+      color: white;
+      background: linear-gradient(120deg, #4338ca, #7c3aed);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .hero-content {
+      max-width: 620px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 54px);
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      line-height: 1.7;
+      color: #e0e7ff;
+      margin-bottom: 25px;
+      font-size: 17px;
+    }
+
+    .hero-art {
+      font-size: 100px;
+    }
+
+    .primary-btn {
+      background: white;
+      color: #4338ca;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .section {
+      width: 88%;
+      max-width: 1250px;
+      margin: 45px auto;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+      font-size: 27px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      margin-top: 7px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      padding: 25px;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+    }
+
+    .stat-card .emoji {
+      font-size: 30px;
+    }
+
+    .stat-card h3 {
+      font-size: 30px;
+      margin: 12px 0 5px;
+    }
+
+    .stat-card p {
+      color: var(--muted);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .controls input,
+    .controls select {
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px;
+      outline: none;
+    }
+
+    .controls input {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .course-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+
+    .course-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .course-banner {
+      height: 145px;
+      display: grid;
+      place-items: center;
+      font-size: 65px;
+    }
+
+    .course-info {
+      padding: 20px;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: bold;
+      padding: 6px 10px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .course-info h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .course-info p {
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
+    .course-meta {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+
+    .course-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      color: white;
+      background: var(--primary);
+      font-weight: bold;
+    }
+
+    .course-btn:hover {
+      background: #3730a3;
+    }
+
+    .progress-track {
+      height: 9px;
+      border-radius: 20px;
+      background: var(--border);
+      overflow: hidden;
+      margin: 12px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--green);
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 28px;
+      border-radius: 18px;
+    }
+
+    .panel h3 {
+      margin-bottom: 12px;
+    }
+
+    .panel p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .mission {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-top: 18px;
+      padding: 15px;
+      background: var(--background);
+      border-radius: 12px;
+    }
+
+    .mission input {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--primary);
+    }
+
+    .mission label {
+      flex: 1;
+      cursor: pointer;
+    }
+
+    .badge-list {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .achievement {
+      background: var(--primary-light);
+      padding: 12px 16px;
+      border-radius: 12px;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .footer {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 30px;
+      color: var(--muted);
+      margin-top: 60px;
+    }
+
+    /* Lesson and quiz modal */
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      background: rgba(15, 23, 42, 0.75);
+      padding: 20px;
+      overflow-y: auto;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      width: 100%;
+      max-width: 650px;
+      background: var(--card);
+      color: var(--text);
+      padding: 30px;
+      border-radius: 20px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .close-btn {
+      background: var(--background);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 8px 13px;
+      height: fit-content;
+    }
+
+    .lesson-text {
+      line-height: 1.8;
+      color: var(--muted);
+      margin: 20px 0;
+    }
+
+    .lesson-text h3 {
+      color: var(--text);
+      margin: 15px 0 8px;
+    }
+
+    .lesson-text pre {
+      background: var(--background);
+      padding: 15px;
+      border-radius: 10px;
+      overflow-x: auto;
+      color: var(--text);
+    }
+
+    .quiz-option {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      text-align: left;
+      border: 1px solid var(--border);
+      background: var(--background);
+      color: var(--text);
+      border-radius: 10px;
+      margin: 10px 0;
+    }
+
+    .quiz-option:hover {
+      border-color: var(--primary);
+    }
+
+    .quiz-option.correct {
+      border-color: #16a34a;
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .quiz-option.wrong {
+      border-color: #dc2626;
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .feedback {
+      margin: 15px 0;
+      font-weight: bold;
+    }
+
+    .empty {
+      color: var(--muted);
+      padding: 25px;
+      text-align: center;
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 850px) {
+      .course-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero-art {
+        font-size: 70px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .navbar {
+        padding: 15px 5%;
+        flex-wrap: wrap;
+      }
+
+      .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 13px;
+      }
+
+      .hero {
+        width: 92%;
+        padding: 35px 7%;
+      }
+
+      .hero-art {
+        display: none;
+      }
+
+      .section {
+        width: 92%;
+      }
+
+      .course-grid,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-content {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-    <!-- Navbar -->
-    <header>
-        <div class="logo">🍴 Foodie</div>
+  <!-- ========== NAVIGATION ========== -->
 
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#menu">Menu</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
+  <nav class="navbar">
+    <div class="logo" onclick="goHome()">🎓 LearnNext</div>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <h1>Delicious Food</h1>
-            <p>Fresh • Tasty • Made With fully love ❤️</p>
-            <button onclick="scrollToMenu()">Explore Menu</button>
-        </div>
-    </section>
+    <div class="nav-links">
+      <a onclick="goHome()">Home</a>
+      <a href="#courses">Courses</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#missions">Missions</a>
+    </div>
 
-    <!-- Menu -->
-    <section class="menu" id="menu">
-        <h2>Our Menu</h2>
-        <p class="subtitle">Choose your favorite food</p>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeButton">
+      🌙 Dark
+    </button>
+  </nav>
 
-        <div class="food-container">
+  <!-- ========== HERO ========== -->
 
-            <!-- 1 -->
-            <div class="food-card">
-                <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80" alt="Pizza">
-                <div class="food-info">
-                    <h3>Magherita pizza</h3>
-                    <p>Fresh cheese and tomato pizza.</p>
-                    <div class="bottom">
-                        <span>₹250</span>
-                        <button onclick="orderFood('Magherita pizza')">Order Now</button>
-                    </div>
-                </div>
+  <header class="hero" id="home">
+    <div class="hero-content">
+      <h1>Learn today.<br>Build tomorrow. 🚀</h1>
+
+      <p>
+        Discover new skills, complete exciting lessons,
+        solve quizzes, and earn rewards on your learning journey.
+      </p>
+
+      <button class="primary-btn"
+        onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})">
+        Start Learning →
+      </button>
+    </div>
+
+    <div class="hero-art">📚</div>
+  </header>
+
+  <!-- ========== DASHBOARD ========== -->
+
+  <section class="section" id="dashboard">
+    <div class="section-heading">
+      <div>
+        <h2>👋 Welcome to LearnNext!</h2>
+        <p>Your learning journey at a glance.</p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="emoji">⭐</div>
+        <h3 id="xpCount">0 XP</h3>
+        <p>Total experience points</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="emoji">📘</div>
+        <h3 id="completedCount">0</h3>
+        <p>Lessons completed</p>
+      </div>
+
+      <div class="stat-card">
+        <div class="emoji">🏆</div>
+        <h3 id="badgeCount">0</h3>
+        <p>Achievements unlocked</p>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:22px">
+      <h3>📈 Overall learning progress</h3>
+      <p id="overallText">Start a course to begin your progress!</p>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="overallProgress"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== COURSES ========== -->
+
+  <section class="section" id="courses">
+    <div class="section-heading">
+      <div>
+        <h2>📚 Explore Courses</h2>
+        <p>Choose a subject and start learning something new.</p>
+      </div>
+    </div>
+
+    <div class="controls">
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="🔍 Search courses..."
+        oninput="renderCourses()"
+      >
+
+      <select id="categoryFilter" onchange="renderCourses()">
+        <option value="All">All Categories</option>
+        <option value="Coding">Coding</option>
+        <option value="Mathematics">Mathematics</option>
+        <option value="Science">Science</option>
+        <option value="English">English</option>
+        <option value="Design">Design</option>
+        <option value="Technology">Technology</option>
+      </select>
+    </div>
+
+    <div class="course-grid" id="courseGrid"></div>
+  </section>
+
+  <!-- ========== MISSIONS ========== -->
+
+  <section class="section" id="missions">
+    <div class="section-heading">
+      <div>
+        <h2>🎯 Daily Missions</h2>
+        <p>Complete your missions to celebrate your progress.</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Today's challenges</h3>
+
+      <div class="mission">
+        <input type="checkbox" id="mission1" onchange="completeMission(1)">
+        <label for="mission1">📖 Complete your first lesson (+20 XP)</label>
+      </div>
+
+      <div class="mission">
+        <input type="checkbox" id="mission2" onchange="completeMission(2)">
+        <label for="mission2">🧠 Pass a quiz (+30 XP)</label>
+      </div>
+
+      <div class="mission">
+        <input type="checkbox" id="mission3" onchange="completeMission(3)">
+        <label for="mission3">🚀 Complete a course (+50 XP)</label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ACHIEVEMENTS ========== -->
+
+  <section class="section" id="achievements">
+    <div class="section-heading">
+      <div>
+        <h2>🏆 Your Achievements</h2>
+        <p>Earn badges as you learn and practice.</p>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="badge-list" id="badgeList">
+        <p class="empty">Your achievements will appear here.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <h3>🎓 LearnNext</h3>
+    <p style="margin-top:10px">Learn today. Build tomorrow.</p>
+    <p style="margin-top:10px">© 2026 LearnNext. Keep learning!</p>
+  </footer>
+
+  <!-- ========== LESSON MODAL ========== -->
+
+  <div class="modal" id="lessonModal">
+    <div class="modal-content">
+      <div class="modal-top">
+        <h2 id="lessonTitle">Lesson</h2>
+        <button class="close-btn" onclick="closeModal('lessonModal')">✕</button>
+      </div>
+
+      <div id="lessonBody" class="lesson-text"></div>
+
+      <button class="course-btn" id="completeLessonBtn"
+        onclick="completeLesson()">
+        Mark Lesson Complete (+20 XP)
+      </button>
+
+      <button class="course-btn" style="margin-top:10px;background:#64748b"
+        onclick="startQuiz()">
+        Take Lesson Quiz 🧠
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== QUIZ MODAL ========== -->
+
+  <div class="modal" id="quizModal">
+    <div class="modal-content">
+      <div class="modal-top">
+        <h2>🧠 Quick Quiz</h2>
+        <button class="close-btn" onclick="closeModal('quizModal')">✕</button>
+      </div>
+
+      <p id="quizProgress"></p>
+      <h3 id="quizQuestion" style="margin-top:20px"></h3>
+
+      <div id="quizOptions"></div>
+
+      <p class="feedback" id="quizFeedback"></p>
+
+      <button class="course-btn" id="nextQuestionBtn"
+        style="display:none" onclick="nextQuestion()">
+        Next Question →
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // ========== JAVASCRIPT ==========
+
+    const courses = [
+      {
+        id: 1,
+        title: "HTML & CSS Basics",
+        category: "Coding",
+        icon: "💻",
+        color: "#e0e7ff",
+        level: "Beginner",
+        duration: "20 min",
+        description: "Learn how to create and style your first webpage.",
+        lessons: [
+          {
+            title: "Introduction to HTML",
+            content: `
+              <h3>What is HTML?</h3>
+              <p>HTML stands for HyperText Markup Language.
+              It provides the structure of a webpage.</p>
+              <h3>Your first HTML element</h3>
+              <pre>&lt;h1&gt;Hello World!&lt;/h1&gt;</pre>
+              <p>The h1 element creates a main heading.</p>
+              <h3>Try it yourself</h3>
+              <p>Create a heading that says Hello LearnNext!</p>
+            `
+          },
+          {
+            title: "Introduction to CSS",
+            content: `
+              <h3>What is CSS?</h3>
+              <p>CSS stands for Cascading Style Sheets.
+              It controls how HTML elements look.</p>
+              <h3>Example</h3>
+              <pre>h1 {
+  color: blue;
+  font-size: 32px;
+}</pre>
+              <p>This makes your heading blue and changes its size.</p>
+            `
+          }
+        ],
+        quiz: [
+          {
+            question: "What does HTML stand for?",
+            options: [
+              "HyperText Markup Language",
+              "HighText Machine Language",
+              "Home Tool Markup Language"
+            ],
+            answer: 0
+          },
+          {
+            question: "Which language styles a webpage?",
+            options: ["HTML", "CSS", "SQL"],
+            answer: 1
+          }
+        ]
+      },
+      {
+        id: 2,
+        title: "Mathematics Puzzles",
+        category: "Mathematics",
+        icon: "🔢",
+        color: "#fef3c7",
+        level: "Beginner",
+        duration: "15 min",
+        description: "Practice numbers, patterns, and fun puzzles.",
+        lessons: [
+          {
+            title: "Number Patterns",
+            content: `
+              <h3>Discover the pattern</h3>
+              <p>Look at this sequence: 2, 4, 6, 8...</p>
+              <p>Each number increases by 2.</p>
+              <h3>Try it</h3>
+              <p>What comes next after 8?</p>
+              <p>Think about the rule before taking the quiz!</p>
+            `
+          }
+        ],
+        quiz: [
+          {
+            question: "What comes next: 2, 4, 6, 8, __?",
+            options: ["9", "10", "12"],
+            answer: 1
+          },
+          {
+            question: "What is 7 × 6?",
+            options: ["36", "40", "42"],
+            answer: 2
+          }
+        ]
+      },
+      {
+        id: 3,
+        title: "Science Explorer",
+        category: "Science",
+        icon: "🔬",
+        color: "#dcfce7",
+        level: "Beginner",
+        duration: "20 min",
+        description: "Explore space, nature, matter, and science.",
+        lessons: [
+          {
+            title: "Our Solar System",
+            content: `
+              <h3>The Solar System</h3>
+              <p>Our Solar System contains the Sun and the objects
+              that orbit it, including eight planets.</p>
+              <h3>Did you know?</h3>
+              <p>Earth is the third planet from the Sun.</p>
+              <p>Jupiter is the largest planet in our Solar System.</p>
+            `
+          }
+        ],
+        quiz: [
+          {
+            question: "Which planet is third from the Sun?",
+            options: ["Mars", "Earth", "Venus"],
+            answer: 1
+          },
+          {
+            question: "Which is the largest planet?",
+            options: ["Jupiter", "Earth", "Mercury"],
+            answer: 0
+          }
+        ]
+      },
+      {
+        id: 4,
+        title: "English Vocabulary",
+        category: "English",
+        icon: "📖",
+        color: "#fce7f3",
+        level: "Beginner",
+        duration: "10 min",
+        description: "Build vocabulary and improve your English.",
+        lessons: [
+          {
+            title: "Synonyms",
+            content: `
+              <h3>What is a synonym?</h3>
+              <p>A synonym is a word with the same or a similar meaning
+              as another word.</p>
+              <h3>Examples</h3>
+              <p>Happy — Joyful</p>
+              <p>Big — Large</p>
+              <p>Quick — Fast</p>
+            `
+          }
+        ],
+        quiz: [
+          {
+            question: "Which word is a synonym for happy?",
+            options: ["Sad", "Joyful", "Angry"],
+            answer: 1
+          },
+          {
+            question: "Which word is a synonym for quick?",
+            options: ["Fast", "Slow", "Late"],
+            answer: 0
+          }
+        ]
+      },
+      {
+        id: 5,
+        title: "Creative Design",
+        category: "Design",
+        icon: "🎨",
+        color: "#ede9fe",
+        level: "Beginner",
+        duration: "15 min",
+        description: "Discover colors, shapes, and design principles.",
+        lessons: [
+          {
+            title: "Introduction to Colors",
+            content: `
+              <h3>Color basics</h3>
+              <p>Colors help communicate ideas and create visual interest.</p>
+              <h3>Primary colors</h3>
+              <p>In traditional art, red, yellow, and blue are commonly
+              taught as primary colors.</p>
+              <p>Designers also use contrast to make text easier to read.</p>
+            `
+          }
+        ],
+        quiz: [
+          {
+            question: "Which is a primary color in traditional art?",
+            options: ["Red", "Pink", "Brown"],
+            answer: 0
+          },
+          {
+            question: "What helps text stand out from its background?",
+            options: ["Contrast", "Blur", "Noise"],
+            answer: 0
+          }
+        ]
+      },
+      {
+        id: 6,
+        title: "Technology Basics",
+        category: "Technology",
+        icon: "🤖",
+        color: "#cffafe",
+        level: "Beginner",
+        duration: "20 min",
+        description: "Learn about computers and digital technology.",
+        lessons: [
+          {
+            title: "Computer Fundamentals",
+            content: `
+              <h3>What is a computer?</h3>
+              <p>A computer is an electronic device that processes data
+              according to instructions.</p>
+              <h3>Hardware and software</h3>
+              <p>Hardware refers to physical components.</p>
+              <p>Software refers to programs and instructions.</p>
+            `
+          }
+        ],
+        quiz: [
+          {
+            question: "Which is a hardware component?",
+            options: ["Keyboard", "Web browser", "Text document"],
+            answer: 0
+          },
+          {
+            question: "What is software?",
+            options: [
+              "Only computer wires",
+              "Programs and instructions",
+              "A computer desk"
+            ],
+            answer: 1
+          }
+        ]
+      }
+    ];
+
+    // ========== SAVED PLAYER DATA ==========
+
+    const defaultData = {
+      xp: 0,
+      completedLessons: [],
+      completedCourses: [],
+      passedQuizzes: [],
+      missions: [],
+      badges: [],
+      theme: "light"
+    };
+
+    function loadData() {
+      try {
+        const saved = JSON.parse(localStorage.getItem("learnNextData"));
+        return saved ? { ...defaultData, ...saved } : { ...defaultData };
+      } catch {
+        return { ...defaultData };
+      }
+    }
+
+    let player = loadData();
+    let activeCourse = null;
+    let activeLesson = 0;
+    let quizIndex = 0;
+    let quizScore = 0;
+    let answered = false;
+
+    function saveData() {
+      try {
+        localStorage.setItem("learnNextData", JSON.stringify(player));
+      } catch (error) {
+        console.warn("Progress could not be saved.", error);
+      }
+    }
+
+    function goHome() {
+      document.getElementById("home").scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+
+    // ========== COURSE DISPLAY ==========
+
+    function renderCourses() {
+      const grid = document.getElementById("courseGrid");
+      const search = document.getElementById("searchInput")
+        .value.toLowerCase().trim();
+
+      const category = document.getElementById("categoryFilter").value;
+
+      const filtered = courses.filter(course => {
+        const matchesSearch =
+          course.title.toLowerCase().includes(search) ||
+          course.description.toLowerCase().includes(search) ||
+          course.category.toLowerCase().includes(search);
+
+        const matchesCategory =
+          category === "All" || course.category === category;
+
+        return matchesSearch && matchesCategory;
+      });
+
+      if (!filtered.length) {
+        grid.innerHTML = '<p class="empty">No courses found. Try another search.</p>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map(course => {
+        const completed = course.lessons.filter((lesson, index) =>
+          player.completedLessons.includes(`${course.id}-${index}`)
+        ).length;
+
+        const percent = Math.round(
+          completed / course.lessons.length * 100
+        );
+
+        const finished = player.completedCourses.includes(course.id);
+
+        return `
+          <article class="course-card">
+            <div class="course-banner" style="background:${course.color}">
+              ${course.icon}
             </div>
 
-            <!-- 2 -->
-            <div class="food-card">
-                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80" alt="Burger">
-                <div class="food-info">
-                    <h3>Cheese Burger</h3>
-                    <p>Juicy burger with melted cheese.</p>
-                    <div class="bottom">
-                        <span>₹150</span>
-                        <button onclick="orderFood('Cheese Burger')">Order Now</button>
-                    </div>
+            <div class="course-info">
+              <span class="tag">${course.category}</span>
+              <h3>${course.title}</h3>
+              <p>${course.description}</p>
+
+              <div class="course-meta">
+                🌱 ${course.level} &nbsp; • &nbsp; ⏱ ${course.duration}
+              </div>
+
+              <div>
+                <small>${completed}/${course.lessons.length} lessons completed</small>
+                <div class="progress-track">
+                  <div class="progress-fill" style="width:${percent}%"></div>
                 </div>
+              </div>
+
+              <button class="course-btn" onclick="openCourse(${course.id})">
+                ${finished ? "Review Course ↻" : completed ? "Continue Learning →" : "Start Course →"}
+              </button>
             </div>
+          </article>
+        `;
+      }).join("");
+    }
 
-            <!-- 3 -->
-            <div class="food-card">
-                <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=800&q=80" alt="Pasta">
-                <div class="food-info">
-                    <h3>Italian Pasta</h3>
-                    <p>Creamy and delicious Italian pasta.</p>
-                    <div class="bottom">
-                        <span>₹300</span>
-                        <button onclick="orderFood('Italian Pasta')">Order Now</button>
-                    </div>
-                </div>
-            </div>
+    // ========== LESSONS ==========
 
-            <!-- 4 -->
-       <div class="food-card">
-                <img src="https://images.unsplash.com/photo-1631515242808-497c3fbd3972?auto=format&fit=crop&w=800&q=80" alt="Chicken Biryani">
-                <div class="food-info">
-                    <h3>Chicken Biryani</h3>
-                    <p>Fragrant rice with delicious spices.</p>
-                    <div class="bottom">
-                        <span>₹500</span>
-                        <button onclick="orderFood('Chicken Biryani')">Order Now</button>
-                    </div>
-                </div>
-            </div>
+    function openCourse(id) {
+      activeCourse = courses.find(course => course.id === id);
+      activeLesson = activeCourse.lessons.findIndex((lesson, index) =>
+        !player.completedLessons.includes(`${activeCourse.id}-${index}`)
+      );
 
-            <!-- 5 -->
-            <div class="food-card">
-                <img src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?auto=format&fit=crop&w=800&q=80" alt="Tacos">
-                <div class="food-info">
-                    <h3>Tacos</h3>
-                    <p>Crispy tacos filled with fresh ingredients.</p>
-                    <div class="bottom">
-                        <span>₹159</span>
-                        <button onclick="orderFood('Tacos')">Order Now</button>
-                    </div>
-                </div>
-            </div>
+      if (activeLesson === -1) activeLesson = 0;
 
-            <!-- 6 -->
-            <div class="food-card">
-                <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=800&q=80" alt="French Fries">
-                <div class="food-info">
-                    <h3>French Fries</h3>
-                    <p>Crispy golden fries with seasoning.</p>
-                    <div class="bottom">
-                        <span>₹150</span>
-                        <button onclick="orderFood('French Fries')">Order Now</button>
-                    </div>
-                </div>
-            </div>
+      showLesson();
+    }
 
-            <!-- 7 -->
-            <div class="food-card">
-                <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80" alt="Sandwich">
-                <div class="food-info">
-                    <h3>Club Sandwich</h3>
-                    <p>Fresh vegetables and tasty fillings.</p>
-                    <div class="bottom">
-                        <span>₹199</span>
-                        <button onclick="orderFood('Club Sandwich')">Order Now</button>
-                    </div>
-                </div>
-            </div>
+    function showLesson() {
+      const lesson = activeCourse.lessons[activeLesson];
+      const key = `${activeCourse.id}-${activeLesson}`;
+      const completed = player.completedLessons.includes(key);
 
-            <!-- 8 -->
-            <div class="food-card">
-                <img src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?auto=format&fit=crop&w=800&q=80" alt="Noodles">
-                <div class="food-info">
-                    <h3>Veg Noodles</h3>
-                    <p>Hot noodles tossed with fresh vegetables.</p>
-                    <div class="bottom">
-                        <span>₹200</span>
-                        <button onclick="orderFood('Veg Noodles')">Order Now</button>
-                    </div>
-                </div>
-            </div>
+      document.getElementById("lessonTitle").textContent =
+        `${activeCourse.icon} ${lesson.title}`;
 
-            <!-- 9 -->
-            <div class="food-card">
-                <img src="https://images.unsplash.com/photo-1528207776546-365bb710ee93?auto=format&fit=crop&w=800&q=80" alt="Pancakes">
-                <div class="food-info">
-                    <h3>Pancakes</h3>
-                    <p>Soft pancakes served with sweet toppings.</p>
-                    <div class="bottom">
-                        <span>₹139</span>
-                        <button onclick="orderFood('Pancakes')">Order Now</button>
-                    </div>
-                </div>
-            </div>
+      document.getElementById("lessonBody").innerHTML = lesson.content;
 
-            <!-- 10 -->
-            <div class="food-card">
-                <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80" alt="Chocolate Cake">
-                <div class="food-info">
-                    <h3>Chocolate Cake</h3>
-                    <p>Rich and delicious chocolate cake.</p>
-                    <div class="bottom">
-                        <span>₹3000</span>
-                        <button onclick="orderFood('Chocolate Cake')">Order Now</button>
-                    </div>
-                </div>
-            </div>
+      const button = document.getElementById("completeLessonBtn");
 
-        </div>
-    </section>
+      button.disabled = completed;
+      button.textContent = completed
+        ? "✓ Lesson Completed"
+        : "Mark Lesson Complete (+20 XP)";
 
-    <!-- About -->
-    <section class="about" id="about">
-        <h2>About Foodie</h2>
-        <p>
-            We serve delicious food made with fresh ingredients.
-            From crispy fries to tasty biryani, there is something
-            for everyone.
-        </p>
-    </section>
+      button.style.opacity = completed ? "0.65" : "1";
 
-    <!-- Contact -->
-    <section class="contact" id="contact">
-        <h2>Contact Us</h2>
-        <p>📧 foodie@example.com</p>
-        <p>📞 +91 98765 43210</p>
-    </section>
+      document.getElementById("lessonModal").classList.add("active");
+    }
 
-    <!-- Footer -->
-    <footer>
-        <p>© 2026 Foodie. All Rights Reserved.</p>
-    </footer>
+    function completeLesson() {
+      const key = `${activeCourse.id}-${activeLesson}`;
 
-    <script src="script.js"></script>
+      if (player.completedLessons.includes(key)) return;
+
+      player.completedLessons.push(key);
+      player.xp += 20;
+
+      const courseFinished = activeCourse.lessons.every((lesson, index) =>
+        player.completedLessons.includes(`${activeCourse.id}-${index}`)
+      );
+
+      if (courseFinished &&
+          !player.completedCourses.includes(activeCourse.id)) {
+        player.completedCourses.push(activeCourse.id);
+        player.xp += 50;
+        alert("🎉 Course completed! You earned 50 bonus XP!");
+      } else {
+        alert("🎉 Lesson completed! You earned 20 XP!");
+      }
+
+      updateUI();
+      showLesson();
+    }
+
+    // ========== QUIZ SYSTEM ==========
+
+    function startQuiz() {
+      quizIndex = 0;
+      quizScore = 0;
+      answered = false;
+
+      closeModal("lessonModal");
+      document.getElementById("quizModal").classList.add("active");
+
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const quiz = activeCourse.quiz[quizIndex];
+
+      document.getElementById("quizProgress").textContent =
+        `Question ${quizIndex + 1} of ${activeCourse.quiz.length}`;
+
+      document.getElementById("quizQuestion").textContent = quiz.question;
+
+      document.getElementById("quizFeedback").textContent = "";
+
+      document.getElementById("nextQuestionBtn").style.display = "none";
+
+      document.getElementById("quizOptions").innerHTML =
+        quiz.options.map((option, index) => `
+          <button class="quiz-option" onclick="answerQuestion(${index})">
+            ${String.fromCharCode(65 + index)}. ${option}
+          </button>
+        `).join("");
+
+      answered = false;
+    }
+
+    function answerQuestion(index) {
+      if (answered) return;
+      answered = true;
+
+      const quiz = activeCourse.quiz[quizIndex];
+      const buttons = document.querySelectorAll(".quiz-option");
+
+      buttons.forEach((button, i) => {
+        button.disabled = true;
+
+        if (i === quiz.answer) button.classList.add("correct");
+        if (i === index && i !== quiz.answer) button.classList.add("wrong");
+      });
+
+      if (index === quiz.answer) {
+        quizScore++;
+        document.getElementById("quizFeedback").textContent =
+          "✅ Correct! Great job!";
+        document.getElementById("quizFeedback").style.color = "#16a34a";
+      } else {
+        document.getElementById("quizFeedback").textContent =
+          `❌ Not quite. Correct answer: ${quiz.options[quiz.answer]}`;
+        document.getElementById("quizFeedback").style.color = "#dc2626";
+      }
+
+      const nextButton = document.getElementById("nextQuestionBtn");
+      nextButton.style.display = "block";
+
+      nextButton.textContent =
+        quizIndex === activeCourse.quiz.length - 1
+          ? "Finish Quiz 🏁"
+          : "Next Question →";
+    }
+
+    function nextQuestion() {
+      if (quizIndex < activeCourse.quiz.length - 1) {
+        quizIndex++;
+        showQuestion();
+      } else {
+        finishQuiz();
+      }
+    }
+
+    function finishQuiz() {
+      const total = activeCourse.quiz.length;
+      const passed = quizScore >= Math.ceil(total * 0.6);
+
+      document.getElementById("quizQuestion").textContent =
+        `Quiz finished! You scored ${quizScore}/${total}.`;
+
+      document.getElementById("quizOptions").innerHTML = "";
+
+      document.getElementById("quizFeedback").textContent = passed
+        ? "🎉 You passed! Keep up the learning!"
+        : "💪 Keep practicing and try again!";
+
+      const key = String(activeCourse.id);
+
+      if (passed && !player.passedQuizzes.includes(key)) {
+        player.passedQuizzes.push(key);
+        player.xp += 30;
+
+        document.getElementById("quizFeedback").textContent +=
+          " You earned 30 XP!";
+      }
+
+      const nextButton = document.getElementById("nextQuestionBtn");
+      nextButton.textContent = "Close Quiz";
+      nextButton.onclick = () => {
+        closeModal("quizModal");
+        nextButton.onclick = nextQuestion;
+        updateUI();
+      };
+
+      nextButton.style.display = "block";
+
+      saveData();
+      updateUI();
+    }
+
+    // ========== DAILY MISSIONS ==========
+
+    function completeMission(id) {
+      const checkbox = document.getElementById(`mission${id}`);
+
+      if (checkbox.checked) {
+        if (!player.missions.includes(id)) {
+          player.missions.push(id);
+
+          const rewards = { 1: 20, 2: 30, 3: 50 };
+          player.xp += rewards[id];
+
+          alert(`🎉 Mission completed! +${rewards[id]} XP`);
+        }
+      } else {
+        player.missions = player.missions.filter(mission => mission !== id);
+      }
+
+      saveData();
+      updateUI();
+    }
+
+    // ========== BADGES ==========
+
+    function updateBadges() {
+      const definitions = [
+        {
+          id: "first-lesson",
+          name: "🌟 First Step",
+          condition: () => player.completedLessons.length >= 1
+        },
+        {
+          id: "five-lessons",
+          name: "📚 Bookworm",
+          condition: () => player.completedLessons.length >= 5
+        },
+        {
+          id: "quiz-master",
+          name: "🧠 Quiz Explorer",
+          condition: () => player.passedQuizzes.length >= 3
+        },
+        {
+          id: "course-finish",
+          name: "🏆 Course Champion",
+          condition: () => player.completedCourses.length >= 1
+        },
+        {
+          id: "xp-100",
+          name: "⭐ 100 XP Club",
+          condition: () => player.xp >= 100
+        }
+      ];
+
+      definitions.forEach(badge => {
+        if (badge.condition() && !player.badges.includes(badge.id)) {
+          player.badges.push(badge.id);
+        }
+      });
+
+      const list = document.getElementById("badgeList");
+
+      list.innerHTML = player.badges.length
+        ? definitions
+            .filter(badge => player.badges.includes(badge.id))
+            .map(badge => `<div class="achievement">${badge.name}</div>`)
+            .join("")
+        : '<p class="empty">Complete lessons and quizzes to unlock badges!</p>';
+    }
+
+    // ========== DASHBOARD UPDATES ==========
+
+    function updateUI() {
+      const totalLessons = courses.reduce(
+        (sum, course) => sum + course.lessons.length, 0
+      );
+
+      const completed = player.completedLessons.length;
+
+      const percent = Math.round(completed / totalLessons * 100);
+
+      document.getElementById("xpCount").textContent =
+        `${player.xp} XP`;
+
+      document.getElementById("completedCount").textContent = completed;
+
+      document.getElementById("badgeCount").textContent =
+        player.badges.length;
+
+      document.getElementById("overallText").textContent =
+        `${percent}% completed — ${completed} of ${totalLessons} lessons finished.`;
+
+      document.getElementById("overallProgress").style.width =
+        `${percent}%`;
+
+      [1, 2, 3].forEach(id => {
+        document.getElementById(`mission${id}`).checked =
+          player.missions.includes(id);
+      });
+
+      updateBadges();
+      renderCourses();
+      saveData();
+    }
+
+    // ========== THEME AND MODALS ==========
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+
+      player.theme = document.body.classList.contains("dark")
+        ? "dark"
+        : "light";
+
+      document.getElementById("themeButton").textContent =
+        player.theme === "dark" ? "☀️ Light" : "🌙 Dark";
+
+      saveData();
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove("active");
+    }
+
+    // Close modal when clicking outside its content.
+
+    document.querySelectorAll(".modal").forEach(modal => {
+      modal.addEventListener("click", event => {
+        if (event.target === modal) {
+          modal.classList.remove("active");
+        }
+      });
+    });
+
+    // ========== INITIALIZE WEBSITE ==========
+
+    if (player.theme === "dark") {
+      document.body.classList.add("dark");
+      document.getElementById("themeButton").textContent = "☀️ Light";
+    }
+
+    updateUI();
+  </script>
+
 </body>
 </html>
